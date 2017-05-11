@@ -1,28 +1,49 @@
 # Predviđanje cene polovnih automobila
 
 ##	O projektu
-Ovaj projekat se bavi predviđanjem cene motora na osnovu određenih njihovih karakteristika. Podaci korišćeni u okviru ovog projekta su povučeni sa sajta za prodaju polovnih motornih vozila 
-[PolovniAutomobili.com](https://www.polovniautomobili.com/motori) na dan 12/04/2017. Tom prilikom povučeni su podaci o svim postojećim aktivnim oglasima koji se odnose na motore.
-Za prikupljanje, izvlačenje i manipulisanje podacima sa ovog sajta korišćcena je [JSOUP](https://jsoup.org/) Java biblioteka koja predstavlja Java HTML Parser. 
-Glavni deo ovog projekta urađen je u programskom jeziku R kojim je, metodom linearne regresije, napravljen model koji pokazuje koliko koja (relevantna) karakteristika motora utiče na cenu motora.
+Tema ovog projekta je predviđanje cene motora u oglasima na osnovu karakteristika motora. Podaci korišćeni u okviru ovog projekta su dobijeni sa sajta za prodaju polovnih motornih vozila 
+[PolovniAutomobili.com](https://www.polovniautomobili.com/motori), odakle su preuzeti podaci o oglasima za motore. Izvršena je analiza atributa motora koji potencijalno mogu da utiču na cenu i nad njima je kreiran model linearne regresije koji pokazuje na koji način i u kojoj meri određena karakteristika motora utiče na cenu.
 
 
 ##	Linerna regresija
-Linearna regresija predstavlja osnovni tip regresije. Generalna ideja regresije je da ispita dve stvari: 1. da li skup nezavisnih promenljivih obavljaju dobar posao u predviđanju
-zavisne promenljive? Da li model koji koristi nezavisne promenljive računa na varijabilnost u promenama zavisne promenljive? 2. Koje konkretne nezaavisne promenljive su značajni prediktori 
-zavisne promenljive i na koji način one,određene magnitudom i znakom beta koeficijenata, utiču na zavisnu promenljivu. Ovi regresioni koeficijenti se koriste da objasne 
-odnos između jedne zavisne varijable i jedne ili više nezavisnih varijabli. Šta je regresiona jednačina koja pokazuje kako se skup nezavisnih promenljivih može koristiti 
-za predviđanje zavisne promenljive? Najprostiji oblik jednačine sa jednom zavisnom i jednom nezavisnom promenljivom je definisan formulom y = c + b*x, gde je y = zavisna promenljiva,
-c = konstanta (vrednost zavisne promenljive u slučaju da je nezavisna promenljiva jednaka nuli), b = regresioni koeficijent nezavisne promenljive, x = nezavisna promenljiva.
+Linearna regresija predstavlja osnovni tip regresije. Generalna ideja regresije je da odgovori na dva skupa pitanja: 
+1. da li skup nezavisnih promenljivih obavlja dobar posao u predviđanju zavisne promenljive? Da li model koji koristi nezavisne promenljive uzima u obzir varijabilnost u promenama zavisne promenljive? 
+2. Koje konkretne nezavisne promenljive su značajni prediktori zavisne promenljive i na koji način one, određene vrednošću i znakom beta koeficijenata, utiču na zavisnu promenljivu. 
+
+Ovi regresioni koeficijenti se koriste da objasne odnos između jedne zavisne varijable i jedne ili više nezavisnih varijabli. Najprostiji oblik jednačine sa jednom zavisnom i jednom nezavisnom promenljivom je definisan formulom 
+```
+y = c + b*x
+```
+
+gde je: 
+y - zavisna promenljiva,
+c - konstanta (vrednost zavisne promenljive u slučaju da je nezavisna promenljiva jednaka nuli), 
+b - regresioni koeficijent nezavisne promenljive,
+x = nezavisna promenljiva.
 
 ##	Podaci 
-Podaci koji su korišćeni u okviru ovog projekta su povučeni su sa sajta [PolovniAutomobili.com](https://www.polovniautomobili.com/motori), tj sa dela sajta koji je namenje prodaji motora, na dan 12/04/2017.
-Na taj dan povučeni su svi aktivni oglasi koji se odnose na motore i sa svakog oglasa su povučeni podaci o sledećim karakteristikama: Cena (koja će u ovom projektu predstavljati zavisnu promenljivu),
-Stanje motora, Marka motora, Tip, Model, Godiste, Kilometraza, Kubikaza, kW, KS, Broj cilindara, Menjac, Boja, Registracija, Poreklo i Ostecenje. Pošto na samom sajtu ne postoji opcija za preuzimanje ovih podataka,
-u tu svrhu je korišćena [JSOUP](https://jsoup.org/) Java biblioteka koja predstavlja Java HTML Parser. Ova biblioteka pruža veoma praktičan API kojim se mogu izvlačiti podaci sa iz HTML-a i manupulisati tim podacima.
-Dataset korićen u okviru ovog projekta se možete naći u [PolovniAutomobili data.csv](https://github.com/DooMy991/PolovniAutomobili/blob/master/PolovniAutomobili%20data.csv) fajlu.
-Primer podataka iz ovog dataseta dat je u Listingu 1.
+Podaci koji su korišćeni u okviru ovog projekta su dobijeni su sa sajta [PolovniAutomobili.com](https://www.polovniautomobili.com/motori), odnosno iz dela sajta koji je namenjen prodaji motora, na dan 12/04/2017.
+Preuzeti su svi aktivni oglasi koji se odnose na motore i sa svakog oglasa su preuzeti podaci o sledećim karakteristikama: 
+- Cena (koja će u ovom projektu predstavljati zavisnu promenljivu)
+- Stanje motora
+- Marka motora
+- Tip
+- Model
+- Godište
+- Kilometraža
+- Kubikaža
+- Snaga morora u kW
+- Snaga morora u KS
+- Broj cilindara
+- Vrsta menjača
+- Boja
+- Datum registracije
+- Poreklo
+- Informacije o oštećenju
 
+Pošto na samom sajtu ne postoji opcija za direktno preuzimanje ovih podataka, podaci su izvučeni iz HTML-a stranice svakog oglasa posebno. Podaci su sačuvani u CSV formatu u fajlu [PolovniAutomobili data.csv](https://github.com/DooMy991/PolovniAutomobili/blob/master/PolovniAutomobili%20data.csv).
+
+Primer podataka iz ovog dataseta dat je u Listingu 1.
 
 ```
 Cena	Stanje			Marka	Tip	Model						Godiste	Kilometraza	Kubikaza	kW	KS		BrojCilindara	Menjac		Boja	 Registracija		 Poreklo		 Ostecenje
@@ -33,7 +54,7 @@ Cena	Stanje			Marka	Tip	Model						Godiste	Kilometraza	Kubikaza	kW	KS		BrojCilin
 *Listing 1 - Primer podataka dataseta*
 
 ##	Realizacija projekta i tumačenje rezultata
-Na početku ovog projekta potrebno je prvo učitati sve R biblioteke koje će se koristiti kasnije. To su biblioteka **polycor**, koju ćemo koristiti za izlistavanje korelacija između nezavisnih promenljivih koje nisu istog tipa (int i Factor tipa) i biblioteka **MuMIn** koju ćemo koristiti za određivanje vrednosti AICc kriterijuma za modele.
+Za analizu podataka i kreiranje modela linearne regresije, korišćen je programski jezik R. Biblioteke koje su korišćene su [polycor](https://cran.r-project.org/web/packages/polycor/index.html), koja se koristi za računanje korelacije između nezavisnih promenljivih koje nisu istog tipa (int i Factor tipa) i biblioteka [MuMIn](https://cran.r-project.org/web/packages/MuMIn/index.html) koja se koristi za određivanje vrednosti AICc kriterijuma za modele.
 Zatim ćemo učitati dataset iz "PolovniAutomobili data.csv" fajla i nazvati ga **data**. 
 
 ```R
@@ -43,9 +64,9 @@ library(MuMIn)
 
 data = read.csv("PolovniAutomobili data.csv")
 ```
-*Listing 2 - Priprema projekta*
+*Listing 2 - Učitavanje biblioteka*
 
-Pre pravljenja prvog modela izlistaćemo tabelu korelacija za sve varijable iz dataseta pozivanjem hetcor(data) funkcije i ukloniti one varijable koje imaju korelacioni koeficijent veći od 0.8. Tabela korelacije je prikazana u listingu 3.
+Pre kreiranja modela linearne regresije, na osnovu tabele korelacija za sve varijable iz dataseta biće uklonjene one varijable koje imaju korelacioni koeficijent veći od 0.8. Tabela korelacije je prikazana u Listingu 3.
 
 ```R
                   Cena     Stanje        Tip    Godiste Kilometraza   Kubikaza         kW         KS BrojCilindara     Menjac       Boja Registracija    Poreklo
@@ -65,16 +86,12 @@ Poreklo        -0.1362     0.7379     0.0703     -0.407      0.1961   0.001853  
 Ostecenje      -0.3634     0.4405    0.04098     -0.245     0.04219    -0.1584   -0.07265   -0.07234       -0.0537   -0.06062   -0.07853      -0.1547   -0.03149
 ```
 *Listing 3 - Tabela korelacija svih varijabli iz dataseta*
-Iz ove tabele vidimo da su nezavisne promenljive "KS", "kW", "Kubikaza" međusobno visoko korelisane, kao i "Registracija" i "Poreklo", tako da ćemo od postojećeg dataseta napraviti novi
-dataset i iz njega izbaciti nezavisne promenljive "kW", "Kubikaza" i "Poreklo" i nazvati ga **dataBK**. Ovim ćemo dobiti novi dataset koji nema visoko korelisane varijable i sa kojim možemo dalje raditi.
 
-Na osnovu ovog dataseta napravićemo prvi, potpuni model, koji kao zavisnu promenljivu ima Cenu a kao nezavisne sve ostale varijable iz dataseta. Ideja je da na osnovu P vrednosti izbacujemo jednu po jednu nezavisnu promenljivu, posle svakog izbacivanja pravimo novi model, bez te promenljive, 
-dok ne dođemo do modela sa jednom nezavisnom promenljivom, a zatim uporedimo vrednosti AICc koeficijenata svih ovih modela i na osnovu toga zaključimo koji model je optimalan (optimalan je onaj model koji ima najnižu vrednost AICc koeficijenta).
+Iz ove tabele se može zaključiti da su nezavisne promenljive "KS", "kW", "Kubikaza" međusobno visoko korelisane, kao i "Registracija" i "Poreklo". Na osnovu postojećeg dataseta će biti kreiran novi dataset i iz njega izbaciti nezavisne promenljive "kW", "Kubikaza" i "Poreklo" (u narednim listinzima nazvan **dataBK**) koji nema visoko korelisane varijable.
 
-U narednom listingu prikazaću prikazaću naredbe za kreiranje prvog, punog modela, definiciju funkcije kojom ćemo pronalaziti nezavisne promenljive sa najvećom P vrednošću kao i komande kojima ćemo izračunavati AICc koeficijent 
-i pronalaziti nezavisnu promenljivu sa najvećom P vrednošću.
+Prilikom kreiranja modela linearne regersije, korišćen je *algoritam eliminacije unazad* (eng. "backward elimination algorithm") [1]. Algoritam predviđa da se prvo kreira *potpuni model* linearne regresije koji kao kao nezavisne promenljive ima sve varijable iz dataseta (izuzev zavisne varijable, u ovom modelu *Cena*). U svakoj iteraciji se računa vrednost AICc koeficijenta i nakon toga se izbacuje nezavisna promenljiva koja ima najveću P vrednost. Postupak se ponavlja sve dok se ne dođe do modela sa jednom nezavisnom promenljivom. Na kraju, bira se onaj model koji ima najmanju vrednost AICc koeficijenta u odnosu na ostale modele.
 
-
+U Listingu 4 prikazane su naredbe za kreiranje punog modela, za izračunavanje AICc koeficijenta, kao i funkcija koja pronalazi nezavisnu promenljivu sa najvećom P vrednošću.
 
 ```R
 model = lm(Cena ~ Stanje + Tip + Godiste + Kilometraza + KS + BrojCilindara + Menjac + Boja + Registracija + Ostecenje, data = dataBK)
@@ -99,50 +116,7 @@ get2TopPValues(model)
 ```
 *Listing 4 - Kreiranje punog modela, izračunavanje AICc koeficijenta i određivanje nezavisne promenljive koju treba izbaciti iz modela*
 
-Kao što se vidi u prethodnom listingu, vrednost AICc koeficijenta je 72951.87 a nezavisne promenljiva sa najvećom P vrednošću je **Boja**. AICc koeficijent ćemo zabeležiti 
-jer ćemo ga na kraju upoređivati sa koeficijentima ostalih modela kako bi ustanovili koji je optimalan. Naredni korak je kreiranje novog modela koji ne sadrži nezavisnu promenljivu "Boja",
-izračunavanje AICc koeficijenta za taj novi model i određivanje nezavisne promenljive sa najvećom P vrednošću u tom modelu koju ćemo izbaciti iz narednog. To je prikazano u narednom listingu.
- 
-
-```R
-model1 = lm(Cena ~ Stanje + Tip + Godiste + Kilometraza + KS + BrojCilindara + Menjac + Registracija + Ostecenje, data = dataBK)
-
-AICc(model1)
-[1] 73100.15
-
-get2TopPValues(model1)
-Registracija Trajno registrovan        Registracija Registrovan 
-                      0.3889004                       0.3036739 
-
-```
-*Listing 5 - Kreiranje modela1 i analiza*
-
-Kao što se može videti, u ovom modelu nema nezavisne promenljive "Boja". Takođe se može videti da iz narednog modela traba izbaciti nezavisnu promenljivu "Registracija".
-AICc koeficijent je blago porastao što nam govori da je novi model slabiji od početnog, punog modela, ali to ćemo detaljnije analizirati kada zavrsimo ceo ovaj proces i kada budemo imali koeficijente svih modela.
-Ovaj identičan proces će se ponavljati do trenutka kada model sadrži samo jednu nezavnisnu promenljivu tako da nećemo ovde ispisivati detaljan kod za svaku iteraciju ovog procesa.
-
-U narednom listingu možete videti tabelu koja sadrži AICc koeficijente za svih 10 modela, koliko ih ima od prvog, potpunog modela, do poslednjeg koji sadrži samo jednu promenljivu.
-U istoj tabeli možete videti i nezavisnu promenljivu koja je izbačena iz tog modela.
-
-```R
-Naziv		AICc		Izbačena
-
-model		72951.87	**Ovo je potpun model**
-model1		73100.15	Boja
-model2		73097.56	Registracija
-model3		73623.56	Tip
-model4		73621.55	Menjac
-model5		73623.15	Ostecenje
-model6		73775.58	Kilometraza
-model7		73884.49	BrojCilindara
-model8		74201.03	Stanje
-model9		75070.41	Godiste
-
-```
-*Listing 6 - Tabela AICc koeficijenata i izbačenih nezavisnih promenljivih*
-
-Na osnovu tabele iz prethodnog listinga možemo zaključiti da je ipak prvi, potpuni mode bio najbolji, jer on ima najmanju vrednost AICc koeficijenta od svih modela. U narednom listingu 
-ćemo prikazati podatke iz **summary** tabele za potpuni model, pošto smo zaključili da je on optimalan. Na osnovu summary tabele ćemo izvršiti analizu ovog modela.
+Nakon primene *algoritma eliminacije unazad* zaključuje se da je prvi, potpuni model, optimalan, jer ima najmanju vrednost AICc koeficijenta od svih modela. U Listingu 5 je prikazan opis ovog modela.
 
 ```R
 summary(model)
@@ -207,22 +181,27 @@ Multiple R-squared:  0.5756,    Adjusted R-squared:  0.5714
 F-statistic: 136.5 on 39 and 3924 DF,  p-value: < 2.2e-16
 
 ```
-*Listing 7 - Statistički parametri potpunog regresionog modela*
+*Listing 5 - Statistički parametri odabranog regresionog modela*
 
 Iz date summary tabele analiziraćemo sledeće parametre: Residuals, Residual standard error, Multiple R-squared i Ajusted R-squared i F-statistic.
 
-**Residuals** - Reziduali su predstavljaju razliku između pravih vrednosti i vrednosti koje je dati model predvideo.Ovi parametri nam pokazuju minimalnu i maksimalnu vrednost, Medijanu, i prvi i treći kvartal reziduala. Reziduali se kreću od -9269.6 do 23689.3 a medijana im je -159.8. S obzirom da je medijana relativno blizu nuli, to može biti pokazatelj da je nam model dobar.
+**Residuals** - Reziduali predstavljaju razliku između pravih vrednosti i vrednosti koje je dati model predvideo. Ovi parametri nam pokazuju minimalnu i maksimalnu vrednost, medijanu i prvi i treći kvartil reziduala. Reziduali se kreću od -9269.6 do 23689.3, a medijana im je -159.8. S obzirom da je medijana relativno blizu nuli, to može biti pokazatelj da je model dobar.
 
-**Residual standard error** - Ovo je veoma bitan parametar jer pokazuje koliko će u proseku vrednost naše promenljive "Cena" odstupati odstupati od linije koja predstavlja naš regresioni model.
+**Residual standard error** - Ovo je veoma bitan parametar jer pokazuje koliko će u proseku vrednost promenljive "Cena" odstupati od linije koja predstavlja regresioni model.
 
-**Multiple R-squared i Ajusted R-squared** - Ova dva parametra se prvenstveno koriste za upoređivanje modela. S obzirom da smo koristili AICc koeficijent za upoređivanje modela, ova dva parametra ćemo zanemariti.
+**Multiple R-squared i Ajusted R-squared** - Ova dva parametra se prvenstveno koriste za upoređivanje modela. S obzirom da je korišćen AICc koeficijent za upoređivanje modela, ova dva parametra se zanemaruju.
 
-**F-statistic** - Ovaj parametar predstavlja Fišerovu statistiku. On zavisi od broja opservacija i broja nezavisnih promenljivih (stepeni slobode se određuju kada se od broja opservacija oduzme broj nezavisnih promenljivih) i poželjno je da ima što veću vrednost. U našem slučaju ovaj parametar ima vrednost od 136.5 uz 3924 stepeni slobode što može značiti da je naš model dobar, s obzirom da ima vrednost koja je dosta veća od 1.
+**F-statistic** - Ovaj parametar predstavlja Fišerovu statistiku. On zavisi od broja opservacija i broja nezavisnih promenljivih (stepeni slobode se određuju kada se od broja opservacija oduzme broj nezavisnih promenljivih) i poželjno je da ima što veću vrednost. U našem slučaju ovaj parametar ima vrednost od 136.5 uz 3924 stepeni slobode što može značiti da je model dobar s obzirom da ima vrednost koja je dosta veća od 1.
 
 
 ##	Predlozi poboljšanja modela
-Jedna od ideja za poboljšanje ovog modela je dodavanje jos jedne nezavisne promenljive koja bi se odnosila na iskustva korisnika sa konkretnim motorom. S obzirom da se uglavnom radi o polovnim motorima, bilo bi poželjno imati parametar koji bi predstavljao prosečnu ocenu koju je konkretan motor dobio od korisnika koji su bili u kontaktu sa njim. To bi moglo koristiti kao osnova za određivanje cene koja bi se dalje korigovala na osnovu vrednosti ostalih nezavisnih promenljivih.
-##	Literatura	
+Jedna od ideja za poboljšanje ovog modela je dodavanje jos jedne nezavisne promenljive koja bi se odnosila na iskustva korisnika sa konkretnim motorom. S obzirom da se uglavnom radi o polovnim motorima, bilo bi poželjno imati parametar koji bi predstavljao prosečnu ocenu koju je konkretan motor dobio od korisnika koji su bili u kontaktu sa njim. To bi se moglo koristiti kao osnova za određivanje cene koja bi se dalje korigovala na osnovu vrednosti ostalih nezavisnih promenljivih.
+
+
+##	Literatura
+[1] Kutner, M., Nachtsheim, C., & Neter, J. (2004). Applied linear regression models (4th ed.). New York: McGraw-Hill/Irwin
+
+
 -	EDX kurs, Analytics Edge, link: https://courses.edx.org/courses/course-v1:MITx+15.071x_3+1T2016/courseware/f8d71d64418146f18a066d7f0379678c/6248c2ecbbcb40cfa613193e8f1873c1/
 -	Youtube R tutorial korisnika MarinStatsLectures, link: https://www.youtube.com/playlist?list=PLqzoL9-eJTNBJrvFcN-ohc5G13E7Big0e 
 -	Statistics with R (3) - Generalized, linear, and generalized least squares models (LM, GLM, GLS) , link: https://www.youtube.com/watch?v=P-WYkSZp9lY&t=1510s 
