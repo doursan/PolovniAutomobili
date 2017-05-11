@@ -1,4 +1,4 @@
-# Predviđanje broja golova
+# Predviđanje cene polovnih automobila
 
 ##	O projektu
 Ovaj projekat se bavi predviđanjem cene motora na osnovu određenih njihovih karakteristika. Podaci korišćeni u okviru ovog projekta su povučeni sa sajta za prodaju polovnih motornih vozila 
