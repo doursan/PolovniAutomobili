@@ -224,10 +224,10 @@ Jedna od ideja za poboljšanje ovog modela je dodavanje jos jedne nezavisne prom
 
 
 ##	Literatura
-[1] Statistics Solutions. (2013). What is Linear Regression [WWW Document]. Retrieved from [here](http://www.statisticssolutions.com/what-is-linear-regression/).
-[2]  [Mike Moffatt](https://www.thoughtco.com/mike-moffatt-1145885), [An Introduction to Akaike's Information Criterion (AIC)](https://www.thoughtco.com/introduction-to-akaikes-information-criterion-1145956)
-[3] NYU Stern, [The Corrected AIC (AICc)](http://people.stern.nyu.edu/churvich/Forecasting/Handouts/AICC.pdf)
-[4] Kutner, M., Nachtsheim, C., & Neter, J. (2004). Applied linear regression models (4th ed.). New York: McGraw-Hill/Irwin
+[1] Statistics Solutions. (2013). What is Linear Regression [WWW Document]. Retrieved from [here](http://www.statisticssolutions.com/what-is-linear-regression/).  
+[2]  [Mike Moffatt](https://www.thoughtco.com/mike-moffatt-1145885), [An Introduction to Akaike's Information Criterion (AIC)](https://www.thoughtco.com/introduction-to-akaikes-information-criterion-1145956)  
+[3] NYU Stern, [The Corrected AIC (AICc)](http://people.stern.nyu.edu/churvich/Forecasting/Handouts/AICC.pdf)  
+[4] Kutner, M., Nachtsheim, C., & Neter, J. (2004). Applied linear regression models (4th ed.). New York: McGraw-Hill/Irwin  
 
 
 -	EDX kurs, Analytics Edge, link: https://courses.edx.org/courses/course-v1:MITx+15.071x_3+1T2016/courseware/f8d71d64418146f18a066d7f0379678c/6248c2ecbbcb40cfa613193e8f1873c1/
