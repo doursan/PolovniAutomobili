@@ -15,11 +15,15 @@ Ovi regresioni koeficijenti se koriste da objasne odnos između jedne zavisne va
 y = c + b*x
 ```
 
-gde je: 
-y - zavisna promenljiva,
-c - konstanta (vrednost zavisne promenljive u slučaju da je nezavisna promenljiva jednaka nuli), 
-b - regresioni koeficijent nezavisne promenljive,
-x = nezavisna promenljiva.
+gde je:   
+y - zavisna promenljiva,  
+c - konstanta (vrednost zavisne promenljive u slučaju da je nezavisna promenljiva jednaka nuli),   
+b - regresioni koeficijent nezavisne promenljive,  
+x = nezavisna promenljiva [1].    
+  
+Akaike informacioni kriterijum (poznatiji kao **AIC)** je kriterijum za izbor između statističkih ili ekonometrijskih modela. AIC je u suštini procenjena mera kvaliteta svakog od raspoloživih modela koji su međusobno povezani datasetom nad kojim su kreirani, što ga čini idealnim metodom za selekciju modela [2].  
+  
+Iako bi AIC trebalo da rezultuje selekciji štedljivog modela, ovo neće uvek biti slučaj. U stvari, u slučaju da mu je pružena ta opcija, AIC će preferirati model sa n parametara u odnosu na bilo koji drugi model. Ovo može predstavljati problem kada  je broj parametara u modelu koji se razmatra veći od (grubo) 30% veličine uzorka. Kako bi uklonili ovaj nedostatak Hurvich i Tsai (1989) su uveli  korigovanu verziju, AICc [3].
 
 ##	Podaci 
 Podaci koji su korišćeni u okviru ovog projekta su dobijeni su sa sajta [PolovniAutomobili.com](https://www.polovniautomobili.com/motori), odnosno iz dela sajta koji je namenjen prodaji motora, na dan 12/04/2017.
@@ -46,9 +50,9 @@ Pošto na samom sajtu ne postoji opcija za direktno preuzimanje ovih podataka, p
 Primer podataka iz ovog dataseta dat je u Listingu 1.
 
 ```
-Cena	Stanje			Marka	Tip	Model						Godiste	Kilometraza	Kubikaza	kW	KS		BrojCilindara	Menjac		Boja	 Registracija		 Poreklo		 Ostecenje
-999		Polovan motor	Piaggio	Scooter	beverly 200				2002	16000		198			14	19		1	 			Automatski	Plava	 Nije registrovan	 Na ime kupca	 Nije ostecen
-650		Polovan motor	Yamaha	Sport / Super sport	FZR 600R	1994	74000		600			74	100		4				 Manuelni	Zuta	 Nije registrovan	 Strane tablice	 Nije ostecen
+Cena,Stanje,Tip,Godiste,Kilometraza,Kubikaza,kW,KS,BrojCilindara,Menjac,Boja,Registracija,Poreklo,Ostecenje
+999,Polovan motor,Scooter,2002,16000,198,14,19,1, Automatski, Plava, Nije registrovan, Na ime kupca, Nije ostecen
+650,Polovan motor,Sport / Super sport,1994,74000,600,74,100,4, Manuelni,Zuta, Nije registrovan, Strane tablice, Nije ostecen
 
 ```
 *Listing 1 - Primer podataka dataseta*
@@ -89,7 +93,7 @@ Ostecenje      -0.3634     0.4405    0.04098     -0.245     0.04219    -0.1584  
 
 Iz ove tabele se može zaključiti da su nezavisne promenljive "KS", "kW", "Kubikaza" međusobno visoko korelisane, kao i "Registracija" i "Poreklo". Na osnovu postojećeg dataseta će biti kreiran novi dataset i iz njega izbaciti nezavisne promenljive "kW", "Kubikaza" i "Poreklo" (u narednim listinzima nazvan **dataBK**) koji nema visoko korelisane varijable.
 
-Prilikom kreiranja modela linearne regersije, korišćen je *algoritam eliminacije unazad* (eng. "backward elimination algorithm") [1]. Algoritam predviđa da se prvo kreira *potpuni model* linearne regresije koji kao kao nezavisne promenljive ima sve varijable iz dataseta (izuzev zavisne varijable, u ovom modelu *Cena*). U svakoj iteraciji se računa vrednost AICc koeficijenta i nakon toga se izbacuje nezavisna promenljiva koja ima najveću P vrednost. Postupak se ponavlja sve dok se ne dođe do modela sa jednom nezavisnom promenljivom. Na kraju, bira se onaj model koji ima najmanju vrednost AICc koeficijenta u odnosu na ostale modele.
+Prilikom kreiranja modela linearne regersije, korišćen je *algoritam eliminacije unazad* (eng. "backward elimination algorithm") [4]. Algoritam predviđa da se prvo kreira *potpuni model* linearne regresije koji kao kao nezavisne promenljive ima sve varijable iz dataseta (izuzev zavisne varijable, u ovom modelu *Cena*). U svakoj iteraciji se računa vrednost AICc koeficijenta i nakon toga se izbacuje nezavisna promenljiva koja ima najveću P vrednost. Postupak se ponavlja sve dok se ne dođe do modela sa jednom nezavisnom promenljivom. Na kraju, bira se onaj model koji ima najmanju vrednost AICc koeficijenta u odnosu na ostale modele.
 
 U Listingu 4 prikazane su naredbe za kreiranje punog modela, za izračunavanje AICc koeficijenta, kao i funkcija koja pronalazi nezavisnu promenljivu sa najvećom P vrednošću.
 
@@ -193,13 +197,37 @@ Iz date summary tabele analiziraćemo sledeće parametre: Residuals, Residual st
 
 **F-statistic** - Ovaj parametar predstavlja Fišerovu statistiku. On zavisi od broja opservacija i broja nezavisnih promenljivih (stepeni slobode se određuju kada se od broja opservacija oduzme broj nezavisnih promenljivih) i poželjno je da ima što veću vrednost. U našem slučaju ovaj parametar ima vrednost od 136.5 uz 3924 stepeni slobode što može značiti da je model dobar s obzirom da ima vrednost koja je dosta veća od 1.
 
+**Analiza modela** - Najznačajniji prediktori cene su:
+- Stanje
+- Godiste
+- Kilometraza 
+- KS
+- BrojCilindara
+- Menjac
+Tu bi se takođe mogla ubrojati i faktorska promenljiva Tip s obzirom da su svi tipovi motora, osim Touring tipa, značajni. Ostali prediktori ne utiču značajnije na cenu.
+
+Kratko ćemo analizirati svaki od značajnih prediktora:
+**Stanje** - Na osnovu procenjene vrednosti koja iznosi -3.368e+03 možemo zaključiti da ovaj prediktor, u slučaju da ima vrednost "Polovan motor", utiče negativno na cenu (što zaključujemo iz negativnog predznaka). U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo u Stanju (jedan motor je nov, drugi polovan), polovan motor bi bio jeftiniji za nešto više od 3360 evra.
+
+**Godiste** - Na osnovu procenjene vrednosti koja iznosi 1.181e+02 možemo zaključiti da ovaj prediktor pozitivno utiče na cenu sa porastom godišta proizvodnje. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo u godistu proizvodnje (jedan motor je godinu dana mlađi od drugog), mlađi motor bi bio skuplji za nešto više od 118 evra.
+
+**Kilometraza** - Na osnovu procenjene vrednosti koja iznosi -6.583e-03 možemo zaključiti da ovaj prediktor negativno utiče na cenu (što zaključujemo iz negativnog predznaka). U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo po pređenoj kilometraži, u slučaju da je jedan motor prešao 10000 kilometara više od drugog, prvi će biti jeftiniji za oko 66 evra.
+
+**KS** - Na osnovu procenjene vrednosti koja iznosi 5.247e+01 možemo zaključiti da ovaj prediktor pozitivno utiče na cenu. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo po broju konjskih snaga (recimo da jedan motor ima 100 konjskih snaga više od drugog), motor koji ima 100 konjskih snaga više će biti skuplji za oko 525 evra.
+
+**BrojCilindara** - Na osnovu procenjene vrednosti koja iznosi -5.785e+02 možemo zaključiti da ovaj prediktor negativno utiče na cenu. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo po broju cilindara, motor koji ima jedan cilindar više će u proseku biti jeftiniji za oko 580 evra.
+
+**Menjac** - Na osnovu procenjene vrednosti koja iznosi -1.443e+03 možemo zaključiti da ovaj prediktor, u slučaju da ima vrednost "Manuelni", utiče negativno na cenu (što zaključujemo iz negativnog predznaka). U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo u tipu menjača (jedan motor je automatski, drugi manuelni menjač), motor sa manuelnim menjačem će biti jeftiniji u proseku za 1500 evra.
 
 ##	Predlozi poboljšanja modela
 Jedna od ideja za poboljšanje ovog modela je dodavanje jos jedne nezavisne promenljive koja bi se odnosila na iskustva korisnika sa konkretnim motorom. S obzirom da se uglavnom radi o polovnim motorima, bilo bi poželjno imati parametar koji bi predstavljao prosečnu ocenu koju je konkretan motor dobio od korisnika koji su bili u kontaktu sa njim. To bi se moglo koristiti kao osnova za određivanje cene koja bi se dalje korigovala na osnovu vrednosti ostalih nezavisnih promenljivih.
 
 
 ##	Literatura
-[1] Kutner, M., Nachtsheim, C., & Neter, J. (2004). Applied linear regression models (4th ed.). New York: McGraw-Hill/Irwin
+[1] Statistics Solutions. (2013). What is Linear Regression [WWW Document]. Retrieved from [here](http://www.statisticssolutions.com/what-is-linear-regression/).
+[2]  [Mike Moffatt](https://www.thoughtco.com/mike-moffatt-1145885), [An Introduction to Akaike's Information Criterion (AIC)](https://www.thoughtco.com/introduction-to-akaikes-information-criterion-1145956)
+[3] NYU Stern, [The Corrected AIC (AICc)](http://people.stern.nyu.edu/churvich/Forecasting/Handouts/AICC.pdf)
+[4] Kutner, M., Nachtsheim, C., & Neter, J. (2004). Applied linear regression models (4th ed.). New York: McGraw-Hill/Irwin
 
 
 -	EDX kurs, Analytics Edge, link: https://courses.edx.org/courses/course-v1:MITx+15.071x_3+1T2016/courseware/f8d71d64418146f18a066d7f0379678c/6248c2ecbbcb40cfa613193e8f1873c1/
