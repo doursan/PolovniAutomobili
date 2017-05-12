@@ -10,7 +10,7 @@ Linearna regresija predstavlja osnovni tip regresije. Generalna ideja regresije 
 1. da li skup nezavisnih promenljivih obavlja dobar posao u predviđanju zavisne promenljive? Da li model koji koristi nezavisne promenljive uzima u obzir varijabilnost u promenama zavisne promenljive? 
 2. Koje konkretne nezavisne promenljive su značajni prediktori zavisne promenljive i na koji način one, određene vrednošću i znakom beta koeficijenata, utiču na zavisnu promenljivu. 
 
-Ovi regresioni koeficijenti se koriste da objasne odnos između jedne zavisne varijable i jedne ili više nezavisnih varijabli. Najprostiji oblik jednačine sa jednom zavisnom i jednom nezavisnom promenljivom je definisan formulom 
+Ovi regresioni koeficijenti se koriste da objasne odnos između jedne zavisne varijable i jedne ili više nezavisnih varijabli. Najprostiji oblik jednačine sa jednom zavisnom i jednom nezavisnom promenljivom je definisan formulom [1]: 
 ```
 y = c + b*x
 ```
@@ -19,7 +19,7 @@ gde je:
 y - zavisna promenljiva,  
 c - konstanta (vrednost zavisne promenljive u slučaju da je nezavisna promenljiva jednaka nuli),   
 b - regresioni koeficijent nezavisne promenljive,  
-x = nezavisna promenljiva [1].    
+x - nezavisna promenljiva.    
   
 Akaike informacioni kriterijum (poznatiji kao **AIC)** je kriterijum za izbor između statističkih ili ekonometrijskih modela. AIC je u suštini procenjena mera kvaliteta svakog od raspoloživih modela koji su međusobno povezani datasetom nad kojim su kreirani, što ga čini idealnim metodom za selekciju modela [2].  
   
@@ -197,39 +197,37 @@ Iz date summary tabele analiziraćemo sledeće parametre: Residuals, Residual st
 
 **F-statistic** - Ovaj parametar predstavlja Fišerovu statistiku. On zavisi od broja opservacija i broja nezavisnih promenljivih (stepeni slobode se određuju kada se od broja opservacija oduzme broj nezavisnih promenljivih) i poželjno je da ima što veću vrednost. U našem slučaju ovaj parametar ima vrednost od 136.5 uz 3924 stepeni slobode što može značiti da je model dobar s obzirom da ima vrednost koja je dosta veća od 1.
 
-**Analiza modela** - Najznačajniji prediktori cene su:
+###Analiza modela
+
+Najznačajniji prediktori cene su:
 - Stanje
-- Godiste
-- Kilometraza 
+- Godište
+- Kilometraža 
 - KS
-- BrojCilindara
-- Menjac
-Tu bi se takođe mogla ubrojati i faktorska promenljiva Tip s obzirom da su svi tipovi motora, osim Touring tipa, značajni. Ostali prediktori ne utiču značajnije na cenu.
+- Broj cilindara
+- Menjač
+
+Tu bi se takođe mogla ubrojati i faktorska promenljiva *Tip* s obzirom da su svi tipovi motora, osim Touring tipa, značajni. Ostali prediktori ne utiču značajnije na cenu.
 
 Kratko ćemo analizirati svaki od značajnih prediktora:
-**Stanje** - Na osnovu procenjene vrednosti koja iznosi -3.368e+03 možemo zaključiti da ovaj prediktor, u slučaju da ima vrednost "Polovan motor", utiče negativno na cenu (što zaključujemo iz negativnog predznaka). U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo u Stanju (jedan motor je nov, drugi polovan), polovan motor bi bio jeftiniji za nešto više od 3360 evra.
+**Stanje** - Možemo zaključiti da je ovaj atribut značajan prediktor cene i u slučaju da ima vrednost "Polovan motor", utiče negativno na cenu. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo u Stanju (jedan motor je nov, drugi polovan), polovan motor bi bio jeftiniji za oko 3360 evra.
 
-**Godiste** - Na osnovu procenjene vrednosti koja iznosi 1.181e+02 možemo zaključiti da ovaj prediktor pozitivno utiče na cenu sa porastom godišta proizvodnje. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo u godistu proizvodnje (jedan motor je godinu dana mlađi od drugog), mlađi motor bi bio skuplji za nešto više od 118 evra.
+**Godiste** - Možemo zaključiti da je ovaj atribut značajan prediktor cene koja raste porastom godišta proizvodnje. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo u godištu proizvodnje (jedan motor je godinu dana mlađi od drugog), mlađi motor bi bio skuplji za nešto više od 118 evra.
 
-**Kilometraza** - Na osnovu procenjene vrednosti koja iznosi -6.583e-03 možemo zaključiti da ovaj prediktor negativno utiče na cenu (što zaključujemo iz negativnog predznaka). U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo po pređenoj kilometraži, u slučaju da je jedan motor prešao 10000 kilometara više od drugog, prvi će biti jeftiniji za oko 66 evra.
+**Kilometraza** - Možemo zaključiti da je ovaj atribut značajan prediktor cene koji negativno utiče na cenu. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo po pređenoj kilometraži, u slučaju da je jedan motor prešao 10000 kilometara više od drugog, prvi će biti jeftiniji za oko 66 evra.
 
-**KS** - Na osnovu procenjene vrednosti koja iznosi 5.247e+01 možemo zaključiti da ovaj prediktor pozitivno utiče na cenu. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo po broju konjskih snaga (recimo da jedan motor ima 100 konjskih snaga više od drugog), motor koji ima 100 konjskih snaga više će biti skuplji za oko 525 evra.
+**KS** - Možemo zaključiti da je ovaj atribut značajan prediktor cene i pozitivno utiče na nju. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo po broju konjskih snaga, motor koji ima 100 konjskih snaga više će biti skuplji za oko 525 evra.
 
-**BrojCilindara** - Na osnovu procenjene vrednosti koja iznosi -5.785e+02 možemo zaključiti da ovaj prediktor negativno utiče na cenu. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo po broju cilindara, motor koji ima jedan cilindar više će u proseku biti jeftiniji za oko 580 evra.
+**BrojCilindara** -Možemo zaključiti da je ovaj atribut značajan prediktor cene i negativno utiče na cenu. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo po broju cilindara, motor koji ima jedan cilindar više će u proseku biti jeftiniji za oko 580 evra.
 
-**Menjac** - Na osnovu procenjene vrednosti koja iznosi -1.443e+03 možemo zaključiti da ovaj prediktor, u slučaju da ima vrednost "Manuelni", utiče negativno na cenu (što zaključujemo iz negativnog predznaka). U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo u tipu menjača (jedan motor je automatski, drugi manuelni menjač), motor sa manuelnim menjačem će biti jeftiniji u proseku za 1500 evra.
+**Menjac** - Možemo zaključiti da je ovaj atribut značajan prediktor cene i u slučaju da ima vrednost "Manuelni", utiče negativno na cenu. U slučaju da dva motora imaju potpuno iste vrednosti ostalih nezavisnih promenljivih i da se razlikuju samo u tipu menjača (jedan motor je automatski, drugi manuelni menjač), motor sa manuelnim menjačem će biti jeftiniji u proseku za 1500 evra.
 
 ##	Predlozi poboljšanja modela
-Jedna od ideja za poboljšanje ovog modela je dodavanje jos jedne nezavisne promenljive koja bi se odnosila na iskustva korisnika sa konkretnim motorom. S obzirom da se uglavnom radi o polovnim motorima, bilo bi poželjno imati parametar koji bi predstavljao prosečnu ocenu koju je konkretan motor dobio od korisnika koji su bili u kontaktu sa njim. To bi se moglo koristiti kao osnova za određivanje cene koja bi se dalje korigovala na osnovu vrednosti ostalih nezavisnih promenljivih.
+Jedna od ideja za poboljšanje ovog modela je dodavanje dodatne nezavisne promenljive koja bi se odnosila na iskustva korisnika sa konkretnim motorom. S obzirom da se uglavnom radi o polovnim motorima, bilo bi poželjno imati parametar koji bi predstavljao prosečnu ocenu koju je konkretan motor dobio od korisnika koji su ga vozili.
 
 
 ##	Literatura
 [1] Statistics Solutions. (2013). What is Linear Regression [WWW Document]. Retrieved from [here](http://www.statisticssolutions.com/what-is-linear-regression/).  
-[2]  [Mike Moffatt](https://www.thoughtco.com/mike-moffatt-1145885), [An Introduction to Akaike's Information Criterion (AIC)](https://www.thoughtco.com/introduction-to-akaikes-information-criterion-1145956)  
-[3] NYU Stern, [The Corrected AIC (AICc)](http://people.stern.nyu.edu/churvich/Forecasting/Handouts/AICC.pdf)  
+[2]  Akaike, H. (1998). Information theory and an extension of the maximum likelihood principle. In Selected Papers of Hirotugu Akaike (pp. 199-213). Springer New York.
+[3] Hurvich, C. M., & Tsai, C. L. (1991). Bias of the Corrected| mathromAIC Criterion for Underfitted Regression and time Series Models. Biometrika, 499-509.
 [4] Kutner, M., Nachtsheim, C., & Neter, J. (2004). Applied linear regression models (4th ed.). New York: McGraw-Hill/Irwin  
-
-
--	EDX kurs, Analytics Edge, link: https://courses.edx.org/courses/course-v1:MITx+15.071x_3+1T2016/courseware/f8d71d64418146f18a066d7f0379678c/6248c2ecbbcb40cfa613193e8f1873c1/
--	Youtube R tutorial korisnika MarinStatsLectures, link: https://www.youtube.com/playlist?list=PLqzoL9-eJTNBJrvFcN-ohc5G13E7Big0e 
--	Statistics with R (3) - Generalized, linear, and generalized least squares models (LM, GLM, GLS) , link: https://www.youtube.com/watch?v=P-WYkSZp9lY&t=1510s 
